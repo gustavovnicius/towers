@@ -9,10 +9,7 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-
-//		String s = "4\n2^2^2\n3^4\n15\n9^2";
-		String s = "4\n1\n2\n3\n4";
-		Scanner sc = new Scanner(s);
+		Scanner sc = new Scanner(System.in);
 
 		List<TowerNumber> numbers = new LinkedList<TowerNumber>();
 		Integer numberCount = sc.nextInt();
@@ -24,9 +21,8 @@ public class Main {
 		sc.close();
 
 		Collections.sort(numbers);
-
+		System.out.println("Case 1:");
 		numbers.forEach((n) -> System.out.println(n));
-
 	}
 
 	public static class TowerNumber implements Comparable<TowerNumber> {
@@ -36,17 +32,25 @@ public class Main {
 		public TowerNumber(String number) {
 			this(number, 0);
 		}
-		
+
 		public TowerNumber(String number, Integer position) {
 			this.number = number;
 			this.position = position;
 		}
 
 		@Override
-		public int compareTo(TowerNumber o) {
-			if(this.getCalculated() == o.getCalculated())
-				return this.getPosition().compareTo(o.getPosition());
-			return this.getCalculated().compareTo(o.getCalculated());
+		public int compareTo(TowerNumber other) {
+			if (this.getNumber().equals(other.getNumber()))
+				return this.getPosition().compareTo(other.getPosition());
+			return this.getCalculated().compareTo(other.getCalculated());
+		}
+
+		public String getNumber() {
+			return this.number;
+		}
+
+		public Integer getPosition() {
+			return this.position;
 		}
 
 		public BigInteger getCalculated() {
@@ -55,10 +59,6 @@ public class Main {
 
 		public List<String> getSplittedNumber() {
 			return new LinkedList<String>(Arrays.asList(number.split("\\^")));
-		}
-
-		public Integer getPosition() {
-			return this.position;
 		}
 
 		private BigInteger asBigInteger(List<String> numbers) {
